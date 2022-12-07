@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
 from apps.base.models import BaseModel
+from apps.tests.models import Test
 
 
 class UserManager(BaseUserManager):
@@ -67,3 +68,11 @@ class UserModel(BaseModel, AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class SolvedTest(BaseModel):
+    """Экземпляр теста решаемого Пользователем"""
+
+    user = models.ForeignKey("UserModel", on_delete=models.CASCADE, related_name='my_tests')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='solved_tests')
+
