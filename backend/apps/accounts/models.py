@@ -3,7 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
 from apps.base.models import BaseModel
-from apps.tests.models import Test
+from apps.tests.models import Test, Option, Question
 
 
 class UserManager(BaseUserManager):
@@ -74,7 +74,6 @@ class SolvedTest(BaseModel):
 
     STATUSES = (
         ('C', 'CREATED'),
-        ('S', 'STARTED'),
         ('F', 'FINISHED'),
     )
 
@@ -82,3 +81,9 @@ class SolvedTest(BaseModel):
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='solved_tests')
 
     status = models.CharField("Статус", choices=STATUSES, max_length=1)
+
+class SolvedQuestion(BaseModel):
+
+    solved_test = models.ForeignKey("SolvedTest",on_delete=models.CASCADE, related_name='questions')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='solved_questions')
+    response = models.ForeignKey(Option, on_delete=models.CASCADE, related_name='solved_questions', null=True, blank=True)

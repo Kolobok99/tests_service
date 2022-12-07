@@ -4,5 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.MainView.as_view(), name='main'),
-    path('test/<int:pk>/', views.TestRetrieveView.as_view(), name='test-detail')
+    path('test/<int:pk>/', views.TestRetrieveView.as_view(), name='test-detail'),
+    path('test/<int:pk>/start/', views.StartNewTest.as_view(), name='test-start'),
+    path('test/<int:test_pk>/question/<int:question_pk>', views.QuestionView.as_view(), name='question-detail')
 ]

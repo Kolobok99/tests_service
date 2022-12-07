@@ -27,7 +27,9 @@ class Question(BaseModel):
 
     test = models.ForeignKey("Test", on_delete=models.CASCADE, related_name='questions')
 
-    selected_option = models.ForeignKey('Option', on_delete=models.PROTECT, related_name='temporary_name')
+    # selected_option = models.ForeignKey('Option', on_delete=models.PROTECT,
+    #                                     related_name='temporary_name',
+    #                                     null=True, blank=True, editable=False)
 
     def __str__(self):
         return f"ТЕСТ [{self.test}] {self.title}"
@@ -39,15 +41,11 @@ class Question(BaseModel):
 
 class Option(BaseModel):
     """Модель Вариант ответа"""
-    #
-    # def get_serial(self):
-    #     number = Test.objects.get(que)
 
     title = models.CharField("Заголовок", max_length=256)
     is_right = models.BooleanField("Правильный?", default=False)
 
     question = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='options')
-    # serial = models.PositiveIntegerField("Порядковый номер", default=)
 
     def __str__(self):
         return f"{self.question}_{self.title}_{self.is_right}"

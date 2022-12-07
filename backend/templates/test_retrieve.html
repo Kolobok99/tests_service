@@ -7,6 +7,6 @@
 <body>
 <h1>Тест № {{ object.pk }}</h1>
 
-<a href="#">Пройти тест</a>
+<a href="{% url 'test-start' object.pk %}">Пройти тест</a>
 </body>
 </html>
