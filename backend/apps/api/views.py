@@ -1,16 +1,17 @@
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import TemplateView, DetailView
 
-from apps.accounts import forms as accounts_forms
+from apps.tests import models as tests_models
 
+class MainView(TemplateView):
 
+    template_name = 'main.html'
 
-class RegistrationView(CreateView):
-    """
-        Контроллер: Регистрация пользователя
-    """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tests'] = tests_models.Test.objects.all()
+        return context
 
-    template_name = 'registration.html'
-    form_class = accounts_forms.UserCreateForm
-    success_url = reverse_lazy('main-page')
+class TestRetrieveView(DetailView):
 
+    template_name = 'test_retrieve.html'
+    model = tests_models.Test

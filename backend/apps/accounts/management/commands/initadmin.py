@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from django.core.management import BaseCommand
 
-from apps.account.models import UserModel
+from apps.accounts.models import UserModel
 
 
 class Command(BaseCommand):
@@ -14,15 +13,12 @@ class Command(BaseCommand):
                 email='root@mail.com',
                 password='root',
             )
-            admin = UserModel.objects.get(is_superuser=True)
-            admin.role = 'm'
-            admin.save()
-        try:
-            UserModel.objects.create_user(
-                email='driver@mail.com',
-                password='12345',
-                is_active=True
-            )
-        except:
-            pass
+        # try:
+        #     UserModel.objects.create_user(
+        #         email='driver@mail.com',
+        #         password='12345',
+        #         is_active=True
+        #     )
+        # except:
+        #     pass
         self.stdout.write(self.style.SUCCESS("Админ создан!"))

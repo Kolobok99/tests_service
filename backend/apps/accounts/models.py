@@ -28,7 +28,6 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-        extra_fields.setdefault('role', 'a')
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError("Root должен иметь is_staff=True.")
@@ -54,7 +53,7 @@ class UserModel(BaseModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    # objects = UserManager()
+    objects = UserManager()
 
     # заглушка для избежания ошибок переопределения AbstractBaseUser
     last_login = None
@@ -73,6 +72,13 @@ class UserModel(BaseModel, AbstractBaseUser, PermissionsMixin):
 class SolvedTest(BaseModel):
     """Экземпляр теста решаемого Пользователем"""
 
+    STATUSES = (
+        ('C', 'CREATED'),
+        ('S', 'STARTED'),
+        ('F', 'FINISHED'),
+    )
+
     user = models.ForeignKey("UserModel", on_delete=models.CASCADE, related_name='my_tests')
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='solved_tests')
 
+    status = models.CharField("Статус", choices=STATUSES, max_length=1)

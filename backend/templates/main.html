@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+
+<h3>Список тестов:</h3>
+<ul>
+{% for test in tests %}
+    <li><a href="{{ test.get_absolute_url }}">{{ test.title }}</li></a>
+{% endfor %}
+</ul>
+
+
+<a href="{% url 'logout' %}" class="auth__exit">Выйти</a>
+</body>
+</html>

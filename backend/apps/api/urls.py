@@ -1,11 +1,8 @@
-from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from apps.api import views
-
+from . import views
 
 urlpatterns = [
-    path('', LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', LogoutView.as_view(template_name='login.html', next_page='login'), name='logout'),
-    path('registration/', views.RegistrationView.as_view(), name='registration'),
+    path('', views.MainView.as_view(), name='main'),
+    path('test/<int:pk>/', views.TestRetrieveView.as_view(), name='test-detail')
 ]
