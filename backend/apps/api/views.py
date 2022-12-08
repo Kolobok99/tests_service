@@ -111,7 +111,6 @@ class QuestionView(DetailView):
                     с возможностью отправки ответов
     """
 
-
     template_name = 'question_detail.html'
     model = accounts_models.SolvedQuestion
 
@@ -122,7 +121,7 @@ class QuestionView(DetailView):
         solved_test = solved_question.solved_test
 
         # Добавляем выбранные ответы к вопросу
-        options = tests_models.Option.objects.filter(pk__in=request.POST.get('options'))
+        options = tests_models.Option.objects.filter(pk__in=request.POST.getlist('options'))
         solved_question.responses.add(*options)
 
         # Если остались неотвеченные вопросы, редирект на следующий вопрос
@@ -136,11 +135,11 @@ class QuestionView(DetailView):
 
         # Иначе вычисляем кол-во правильных и неправильных ответов
         # и редирект на стр. теста
-        questions = solved_test.solved_questions.all()
-        un_corrects = questions.filter(responses__is_right=False).count()
+        solved_questions = solved_test.solved_questions.all()
+        corrects = solved_questions.exclude(responses__is_right=False).count()
 
-        solved_test.corrects = questions.count() - un_corrects
-        solved_test.un_corrects = un_corrects
+        solved_test.corrects = corrects
+        solved_test.un_corrects = solved_questions.count() - corrects
         solved_test.status = 'F'
         solved_test.save()
 
