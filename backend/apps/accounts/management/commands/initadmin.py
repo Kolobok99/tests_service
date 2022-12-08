@@ -13,12 +13,5 @@ class Command(BaseCommand):
                 email='root@mail.com',
                 password='root',
             )
-        # try:
-        #     UserModel.objects.create_user(
-        #         email='driver@mail.com',
-        #         password='12345',
-        #         is_active=True
-        #     )
-        # except:
-        #     pass
+
         self.stdout.write(self.style.SUCCESS("Админ создан!"))

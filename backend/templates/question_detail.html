@@ -7,6 +7,19 @@
 <body>
 <h3>Вопрос # {{ object.pk }}</h3>
 
+{{ object.question.title }}
+<br>
+<br>
+<form id="question" method="post">
+{% csrf_token %}
+{% for option in object.question.options.all %}
+    <div>
+      <input type="checkbox" id="option_{{ option.pk }}" name="options" value="{{ option.pk }}">
+      <label for="option_{{ option.pk }}">{{ option.title }}</label>
+    </div>
+{% endfor %}
 
+<input type="submit" form="question" value="Ответить">
+</form>
 </body>
 </html>

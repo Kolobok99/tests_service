@@ -38,11 +38,3 @@ class UserCreateForm(forms.ModelForm):
             'password',
             'password_repeat',
         )
-
-        # widgets = {
-        #     'email': forms.widgets.EmailInput(),
-        #     'password': forms.widgets.PasswordInput(),
-        #     'first_name': forms.widgets.TextInput(),
-        #     'last_name': forms.widgets.TextInput(),
-        #     'patronymic': forms.widgets.TextInput(),
-        # }

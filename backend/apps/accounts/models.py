@@ -21,7 +21,6 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-
     def create_superuser(self, email, password, **extra_fields):
         """Создание root'а """
 
@@ -70,20 +69,26 @@ class UserModel(BaseModel, AbstractBaseUser, PermissionsMixin):
 
 
 class SolvedTest(BaseModel):
-    """Экземпляр теста решаемого Пользователем"""
+    """Модель теста решаемого Пользователем"""
 
     STATUSES = (
         ('C', 'CREATED'),
         ('F', 'FINISHED'),
     )
 
-    user = models.ForeignKey("UserModel", on_delete=models.CASCADE, related_name='my_tests')
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='solved_tests')
+    user = models.ForeignKey("UserModel", on_delete=models.CASCADE, related_name='tests')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='tests')
 
-    status = models.CharField("Статус", choices=STATUSES, max_length=1)
+    status = models.CharField("Статус", choices=STATUSES, max_length=1, default='C')
+
+    corrects = models.PositiveIntegerField("Кол-во правильных", default=0)
+    un_corrects = models.PositiveIntegerField("Кол-во Неправильных", default=0)
+
 
 class SolvedQuestion(BaseModel):
+    """Модель вопросов, генерируемых для SolvedTest"""
 
-    solved_test = models.ForeignKey("SolvedTest",on_delete=models.CASCADE, related_name='questions')
+    solved_test = models.ForeignKey("SolvedTest", on_delete=models.CASCADE, related_name='solved_questions')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='solved_questions')
-    response = models.ForeignKey(Option, on_delete=models.CASCADE, related_name='solved_questions', null=True, blank=True)
+    responses = models.ManyToManyField(Option, related_name='solved_questions')
+

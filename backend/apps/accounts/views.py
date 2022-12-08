@@ -4,7 +4,6 @@ from django.views.generic import CreateView, TemplateView
 from . import forms
 
 
-
 class RegistrationView(CreateView):
     """
         Контроллер: Регистрация пользователя

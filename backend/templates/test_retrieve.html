@@ -1,3 +1,5 @@
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +7,19 @@
     <title>Тест № {{ object.pk }}</title>
 </head>
 <body>
-<h1>Тест № {{ object.pk }}</h1>
+<h3>Тест № {{ object.pk }}</h3>
 
 <a href="{% url 'test-start' object.pk %}">Пройти тест</a>
+
+<h3>Прошлые попытки</h3>
+<ul>
+    {% for test in finished_tests %}
+        <li>{{ test.test.title }}
+            <i style="color: green">{{ test.corrects }}</i>
+            <i style="color: red">{{ test.un_corrects }}</i>
+            <i style="color: orange">{{ test.corrects|correct_percentage:test.un_corrects}}</i>
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>

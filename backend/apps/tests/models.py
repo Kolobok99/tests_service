@@ -27,10 +27,6 @@ class Question(BaseModel):
 
     test = models.ForeignKey("Test", on_delete=models.CASCADE, related_name='questions')
 
-    # selected_option = models.ForeignKey('Option', on_delete=models.PROTECT,
-    #                                     related_name='temporary_name',
-    #                                     null=True, blank=True, editable=False)
-
     def __str__(self):
         return f"ТЕСТ [{self.test}] {self.title}"
 
