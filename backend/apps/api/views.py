@@ -2,11 +2,11 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, CreateView
 
 from apps.tests import models as tests_models
 from apps.accounts import models as accounts_models
-
+from apps.tests import forms as tests_forms
 
 class MainView(TemplateView):
     """
@@ -162,3 +162,12 @@ class QuestionView(DetailView):
         )
 
         return questions.first()
+
+
+class TestCreate(CreateView):
+    """
+        Контроллер: cоздание нового теста
+    """
+
+    template_name = 'test_create.html'
+    form_class = tests_forms.TestCreateForm

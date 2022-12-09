@@ -1,0 +1,58 @@
+version: "3.8"
+
+volumes:
+  prod_postgres_data:
+  prod_static_volume:
+
+networks:
+  default:
+    name: prod_network
+
+services:
+  web:
+    container_name: prod_web_container
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.prod
+    command: bash -c "
+      python manage.py migrate
+      && python manage.py collectstatic --noinput
+      && gunicorn conf.wsgi:application --bind 0.0.0.0:8000 --reload
+      "
+    volumes:
+      - prod_static_volume:/web/static
+    expose:
+      - 8000
+    env_file:
+      - ../backend/.env.prod/.env.settings
+      - ../backend/.env.prod/.env.db
+    depends_on:
+      - db
+    entrypoint: ./scripts/wait_db.sh
+    restart: always
+  db:
+    container_name: prod_db_container
+    image: postgres
+    volumes:
+      - prod_postgres_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../backend/.env.prod/.env.db
+
+
+
+  nginx:
+    container_name: prod_nginx_container
+    build:
+      context: ../nginx.prod
+    volumes:
+      - prod_static_volume:/web/static
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
+
