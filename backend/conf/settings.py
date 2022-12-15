@@ -20,8 +20,6 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'nested_admin',
-    'nested_inline',
-
 
     'apps.base',
     'apps.accounts',
