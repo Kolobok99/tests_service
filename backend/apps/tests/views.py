@@ -2,13 +2,16 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, DetailView, CreateView
+from django.views.generic import TemplateView, DetailView
 
 from apps.tests import models as tests_models
 from apps.accounts import models as accounts_models
-from apps.tests import forms as tests_forms
 
-class MainView(TemplateView):
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class MainView(LoginRequiredMixin, TemplateView):
     """
         Контроллер: главной страницы
         Функционал:
@@ -29,7 +32,7 @@ class MainView(TemplateView):
         return context
 
 
-class TestRetrieveView(DetailView):
+class TestRetrieveView(LoginRequiredMixin, DetailView):
     """
     Контроллер: тест по test_id
     Функционал:
@@ -56,7 +59,7 @@ class TestRetrieveView(DetailView):
         return context
 
 
-class StartNewTest(View):
+class StartNewTest(LoginRequiredMixin, View):
     """
         Контроллер: генерирует новый SolvedTest для текущего user'а
 
@@ -102,7 +105,7 @@ class StartNewTest(View):
         )
 
 
-class QuestionView(DetailView):
+class QuestionView(LoginRequiredMixin, DetailView):
     """
         Контроллер: генерирует стр. последнего
                     неотвеченный вопрос теста
@@ -134,7 +137,7 @@ class QuestionView(DetailView):
             return HttpResponseRedirect(self.request.path_info)
 
         # Иначе вычисляем кол-во правильных и неправильных ответов
-        # и редирект на стр. теста
+
         solved_questions = solved_test.solved_questions.all()
         corrects = solved_questions.exclude(responses__is_right=False).count()
 
@@ -143,6 +146,7 @@ class QuestionView(DetailView):
         solved_test.status = 'F'
         solved_test.save()
 
+        # и редирект на стр. теста
         return HttpResponseRedirect(solved_test.test.get_absolute_url())
 
     def get_object(self, queryset=None, **kwargs):
