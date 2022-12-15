@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +8,20 @@
 </head>
 <body>
 <h2> Новый тест </h2>
-{% for f in form %}
-    {{ f }}
-{% endfor %}
+<form method="post">
 
+{{ form.label }} {{ form }}
+
+<button class="add-question" type="button">Добавить вопрос</button>
+<br>
+<br>
+<div class="question">
+    <label>Название вопроса:</label>
+    <input id="question" type="text">
+    <button class="add-option" type="button">Добавить ответ</button>
+</div>
+
+</form>
 </body>
+<script src="{% static 'test_create.js' %}"></script>
 </html>

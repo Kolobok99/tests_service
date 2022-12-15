@@ -162,12 +162,3 @@ class QuestionView(DetailView):
         )
 
         return questions.first()
-
-
-class TestCreate(CreateView):
-    """
-        Контроллер: cоздание нового теста
-    """
-
-    template_name = 'test_create.html'
-    form_class = tests_forms.TestCreateForm

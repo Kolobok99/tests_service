@@ -1,4 +1,5 @@
-from django.db import models
+from django.core.exceptions import ValidationError
+from django.db import models, transaction
 from django.urls import reverse_lazy
 
 from apps.base.models import BaseModel
@@ -20,6 +21,8 @@ class Test(BaseModel):
         verbose_name_plural = 'Тесты'
 
 
+
+
 class Question(BaseModel):
     """Модель вопроса"""
 
@@ -27,8 +30,10 @@ class Question(BaseModel):
 
     test = models.ForeignKey("Test", on_delete=models.CASCADE, related_name='questions')
 
+
     def __str__(self):
         return f"ТЕСТ [{self.test}] {self.title}"
+
 
     class Meta:
         verbose_name = 'Вопрос'
@@ -42,6 +47,7 @@ class Option(BaseModel):
     is_right = models.BooleanField("Правильный?", default=False)
 
     question = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='options')
+
 
     def __str__(self):
         return f"{self.question}_{self.title}_{self.is_right}"

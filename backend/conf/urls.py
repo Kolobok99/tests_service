@@ -8,5 +8,6 @@ from apps.accounts import urls as account_urls
 urlpatterns = [
     path('', include(api_urls)),
     path('', include(account_urls)),
+    path('nested_admin/', include('nested_admin.urls')),
     path('admin/', admin.site.urls),
 ]
