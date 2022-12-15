@@ -21,21 +21,3 @@ class TestAdmin(nested_admin.NestedModelAdmin):
     inlines = [QuestionInline]
 
 admin.site.register(Test, TestAdmin)
-
-
-
-
-
-
-
-
-# class OptionInline(admin.StackedInline):
-#     model = Option
-#     formset = OptionInlineFormset
-#     extra = 1
-# class QuestionAdmin(admin.ModelAdmin):
-#     model = Question
-#     inlines = OptionInline,
-#
-#
-# admin.site.register(Question, QuestionAdmin)
