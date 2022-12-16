@@ -21,12 +21,12 @@ class OptionInlineFormset(forms.models.BaseInlineFormSet):
 
         right_count = 0
         for form in self.forms:
-            if form.cleaned_data['is_right']:
-                right_count +=1
+            if form.cleaned_data.get('is_right', False):
+                right_count += 1
 
         if len(self.forms) == 1:
             raise ValidationError('Ошибка: должно быть хотя бы два варианта ответа!')
-        elif right_count == 0:
+        elif not right_count:
             raise ValidationError('Ошибка: должен быть хотя бы один верный ответ!')
         elif right_count == len(self.forms):
             raise ValidationError('Ошибка: все ответы не могут быть правильными!')

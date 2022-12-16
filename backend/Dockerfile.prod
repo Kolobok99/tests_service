@@ -19,7 +19,7 @@ RUN apt-get update \
                            postgresql \
                            postgresql-contrib \
                            netcat \
-    && pip install -r req.txt \
+    && pip install -r requirements.txt \
     && rm -rf /var/lib/apt/lists/*
 
 

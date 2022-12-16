@@ -20,4 +20,7 @@ class QuestionInline(nested_admin.NestedStackedInline):
 class TestAdmin(nested_admin.NestedModelAdmin):
     inlines = [QuestionInline]
 
+
 admin.site.register(Test, TestAdmin)
+admin.site.register(Question)
+admin.site.register(Option)

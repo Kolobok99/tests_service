@@ -2,7 +2,7 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY req.txt /app/req.txt
+COPY requirements.txt /app/req.txt
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1

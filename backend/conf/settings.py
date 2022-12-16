@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", default='django-insecure-nm_h-x*1#se4anh9uf)')
@@ -24,7 +26,6 @@ INSTALLED_APPS = [
     'apps.base',
     'apps.accounts',
     'apps.tests',
-    'apps.api',
 ]
 
 MIDDLEWARE = [
@@ -105,3 +106,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.UserModel'
 
 LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = reverse_lazy('login')
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

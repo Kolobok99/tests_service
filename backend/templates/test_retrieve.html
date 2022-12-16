@@ -11,16 +11,23 @@
 
 <a href="{% url 'test-start' object.pk %}">Пройти тест</a>
 
+{% if finished_tests %}
+
 <h3>Прошлые попытки</h3>
-<ul>
+<ol>
     {% for test in finished_tests %}
-        <li>{{ test.test.title }}
+        <li>
             <i style="color: green">{{ test.corrects }}</i>
             <i style="color: red">{{ test.un_corrects }}</i>
             <i style="color: orange">{{ test.corrects|correct_percentage:test.un_corrects}}</i>
         </li>
 
     {% endfor %}
-</ul>
+</ol>
+
+{% endif %}
 </body>
+<br>
+<a href="{% url 'main' %}" class="auth__exit">Список тестов</a>
+
 </html>

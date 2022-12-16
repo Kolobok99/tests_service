@@ -1,2 +1,3 @@
 /backend/static/
 /.idea
+/backend/conf/settings_local.py

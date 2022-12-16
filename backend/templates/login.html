@@ -24,10 +24,11 @@
                         </div>
                    {% else %}
                        <div class="main__items">
-                           {{ form }}
+                           {{ form.as_p }}
                        </div>
                        <input class="main__button" type="submit" value="Отправить">
-                       <a style="margin-bottom: -15px;" href="{% url 'registration' %}">Регистрация</a>
+                       <br>
+                       <a href="{% url 'registration' %}">Регистрация</a>
                    {% endif %}
                 </form>
             </div>
