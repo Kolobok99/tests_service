@@ -37,7 +37,7 @@ class TestRetrieveView(LoginRequiredMixin, DetailView):
     Контроллер: тест по test_id
     Функционал:
               начать/продолжить выполнение теста
-              вывод результатов прохождения теста
+              вывод результатов прохождениев теста
     """
 
     template_name = 'test_retrieve.html'

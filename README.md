@@ -19,6 +19,13 @@ Tests Service - Сервис для создания и прохождения �
 - вывод статистики по пройденным тестам
 - добавление/редактирование/удаление тестов
 
+Обновления (19.01.2023):
+- добавлено приложение api
+- добавлена точка GET 'api/v1/question/<int:id>/' - получения списка правильных ответов
+- на стр. вопросов добавлена кнопка "Правильные ответы"
+- добавлено приложение polls (Celery)
+- добавлено first(Celery.tasks) - для парсинга вопросов каждую минуту
+
 
 Системные требования
 ---
@@ -50,43 +57,11 @@ Tests Service - Сервис для создания и прохождения �
 		git clone https://github.com/Kolobok99/tests_service
 		cd tests_service
 
-2. Создать директорию с .env.prod. файлами
-		
-	    cd backend
-		mkdir .env.prod
-		cd .env.prod
-
-3. Инициализировать .env.settings со следующими переменными:
-
-	    DEBUG=0
-		SECRET_KEY={your_secret_key}
-		DJANGO_ALLOWED_HOSTS={your_host_ip}
-
-        POSTGRES_NAME=tests_db
-	    POSTGRES_USER=manager
-	    POSTGRES_PASSWORD={your_sql_password}
-	    POSTGRES_HOST=db
-	    POSTGRES_PORT={your_sql_port}
-		
-        API_HOST={your_host_ip_with_port}
-		STRIPE_PUBLISH_API_KEY={your_stripe_publish_api_key}
-		STRIPE_SECRET_API_KEY={your_stripe_secret_api_key}
-        
-		DATABASE=postgres
-
-4. Инициализировать .env.prod.db со следующими переменными:
-
-		POSTGRES_DB=tests_db
-		POSTGRES_USER=manager
-		POSTGRES_PORT={your_sql_port}
-		POSTGRES_PASSWORD={your_sql_password}
-
-5. Собрать проект
+2. Собрать проект
 
 		cd ../docker-composes
-		docker compose -f docker-compose.prod.yml build
+		docker compose -f docker-compose.yml build
 
-6. Запустить проект
+3. Запустить проект
 
-		docker compose -f docker-compose.prod.yml up
-
+		docker compose -f docker-compose.yml up

@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'apps.base',
     'apps.accounts',
     'apps.tests',
+    'apps.polls',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,31 @@ AUTH_USER_MODEL = 'accounts.UserModel'
 LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = reverse_lazy('login')
+
+
+#REDIS:
+REDIS_HOST = os.environ.get('REDIS_HOST', default='0.0.0.0')
+REDIS_PORT = os.environ.get('REDIS_PORT', default='6379')
+
+#REDIS:
+# REDIS_HOST = 'redis'
+# REDIS_PORT = '6379'
+
+#CELERY
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ":" + REDIS_PORT + "/0"
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ":" + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = {'application/json'}
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'js'),)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
 
 try:
     from settings_local import *

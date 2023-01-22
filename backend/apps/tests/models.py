@@ -29,7 +29,7 @@ class Question(BaseModel):
     test = models.ForeignKey("Test", on_delete=models.CASCADE, related_name='questions')
 
     def __str__(self):
-        return f"ТЕСТ [{self.test}] {self.title}"
+        return f"{self.id}ТЕСТ [{self.test}] {self.title}"
 
     class Meta:
         verbose_name = 'Вопрос'
@@ -45,7 +45,7 @@ class Option(BaseModel):
     question = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='options')
 
     def __str__(self):
-        return f"{self.question}_{self.title}_{self.is_right}"
+        return f"{self.id}{self.question}_{self.title}_{self.is_right}"
 
     class Meta:
         verbose_name = 'Вариант ответа'

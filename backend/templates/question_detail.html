@@ -1,12 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Вопрос # {{ object.pk }}</title>
 </head>
 <body>
 <h3>Вопрос # {{ object.pk }}</h3>
-
+<h3 id="title" hidden="hidden">{{ object.question.pk }}</h3>
 {{ object.question.title }}
 <br>
 <br>
@@ -20,6 +20,8 @@
 {% endfor %}
 
 <input type="submit" form="question" value="Ответить">
+<input type="button" id="get_true" value="Правильные ответы">
 </form>
 </body>
+<script src="{% static 'options.js' %}"></script>
 </html>
